@@ -17,6 +17,7 @@ export default function Portfolio() {
     email: "",
     message: "",
   })
+  const [formSent, setFormSent] = useState(false)
 
   const skills = [
     { name: "JavaScript", icon: Code, color: "text-yellow-400" },
@@ -29,32 +30,24 @@ export default function Portfolio() {
 
   const projects = [
     {
-      name: "E-commerce Platform",
-      description: "Plataforma completa de e-commerce com painel administrativo",
-      technologies: ["React", "Next.js", "Tailwind", "MySQL"],
-      github: "#",
+      name: "Sistema de Controle de Vendas",
+      description: "Sistema aonde é possivel saber o controle de vendas e lucros de uma empresa",
+      technologies: ["React", "TypeScript", "Next.js", "SpringBoot", "Tailwind", "PostegreSQL"],
+      github: "https://github.com/Pauloand05/controle_vendas",
     },
     {
-      name: "Task Manager App",
-      description: "Aplicativo de gerenciamento de tarefas com sistema de notificações",
-      technologies: ["Java", "Spring Boot", "React", "MySQL"],
-      github: "#",
+      name: "Dados de Populaçao e Economia",
+      description: "Sistema que consome uma API de dados de populaçao e economia de diversos países",
+      technologies: ["Python", "Pandas", "Plotly.express"],
+      github: "https://github.com/Pauloand05/ProjetoDashboards",
     },
     {
       name: "Portfolio Website",
       description: "Site portfólio responsivo com design moderno e animações",
       technologies: ["Next.js", "Tailwind", "Framer Motion"],
-      github: "#",
+      github: "https://github.com/Pauloand05/Portfolio",
     },
   ]
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Aqui você implementaria o envio do formulário
-    alert("Mensagem enviada com sucesso!")
-    setFormData({ name: "", email: "", message: "" })
-  }
 
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
@@ -219,7 +212,7 @@ export default function Portfolio() {
             {projects.map((project, index) => (
               <Card
                 key={project.name}
-                className="bg-gray-800 border-gray-700 hover:border-green-400 transition-all duration-300 hover:scale-105"
+                className="bg-gray-800 border-gray-700 hover:border-green-400 transition-all duration-300 hover:scale-105 h-full flex flex-col"
               >
                 <div className="aspect-video bg-gradient-to-br from-green-400/20 to-blue-500/20 rounded-t-lg flex items-center justify-center">
                   <Code className="w-16 h-16 text-green-400" />
@@ -228,7 +221,8 @@ export default function Portfolio() {
                   <CardTitle className="text-white">{project.name}</CardTitle>
                   <CardDescription className="text-gray-400">{project.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex flex-col justify-between h-full">
+                <div>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech) => (
                       <Badge key={tech} variant="secondary" className="bg-gray-700 text-green-400">
@@ -236,6 +230,8 @@ export default function Portfolio() {
                       </Badge>
                     ))}
                   </div>
+                </div>
+                <div className="mt-auto">
                   <Button
                     className="w-full bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700"
                     onClick={() => window.open(project.github, "_blank")}
@@ -243,7 +239,8 @@ export default function Portfolio() {
                     <Github className="w-4 h-4 mr-2" />
                     Ver no GitHub
                   </Button>
-                </CardContent>
+                </div>
+              </CardContent>
               </Card>
             ))}
           </div>
@@ -265,7 +262,7 @@ export default function Portfolio() {
                 <Button
                   variant="outline"
                   className="w-full justify-start border-gray-600 hover:border-green-400 hover:bg-green-400/10 bg-transparent"
-                  onClick={() => window.open("https://github.com", "_blank")}
+                  onClick={() => window.open("https://github.com/Pauloand05", "_blank")}
                 >
                   <Github className="w-5 h-5 mr-3" />
                   GitHub
@@ -273,7 +270,7 @@ export default function Portfolio() {
                 <Button
                   variant="outline"
                   className="w-full justify-start border-gray-600 hover:border-blue-400 hover:bg-blue-400/10 bg-transparent"
-                  onClick={() => window.open("https://linkedin.com", "_blank")}
+                  onClick={() => window.open("https://www.linkedin.com/in/paulo-andr%C3%A9-alves-6486ba268/", "_blank")}
                 >
                   <Linkedin className="w-5 h-5 mr-3" />
                   LinkedIn
@@ -281,10 +278,10 @@ export default function Portfolio() {
                 <Button
                   variant="outline"
                   className="w-full justify-start border-gray-600 hover:border-purple-400 hover:bg-purple-400/10 bg-transparent"
-                  onClick={() => window.open("mailto:paulo@email.com", "_blank")}
+                  onClick={() => window.open("mailto:pauloandre050619@gmail.com", "_blank")}
                 >
                   <Mail className="w-5 h-5 mr-3" />
-                  paulo@email.com
+                  pauloandre050619@gmail.com
                 </Button>
               </div>
             </div>
@@ -296,9 +293,18 @@ export default function Portfolio() {
                 <CardDescription>Preencha o formulário abaixo e entrarei em contato em breve.</CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form
+                  action="https://formspree.io/f/mdkzrpkr"
+                  method="POST"
+                  onSubmit={() => setFormSent(true)}
+                  className="space-y-4"
+                >
+                  <input type="hidden" name="_subject" value="Nova mensagem do portfólio" />
+                  <input type="hidden" name="_captcha" value="false" />
+
                   <div>
                     <Input
+                      name="name"
                       placeholder="Seu nome"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -309,6 +315,7 @@ export default function Portfolio() {
                   <div>
                     <Input
                       type="email"
+                      name="email"
                       placeholder="Seu email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -318,6 +325,7 @@ export default function Portfolio() {
                   </div>
                   <div>
                     <Textarea
+                      name="message"
                       placeholder="Sua mensagem"
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -325,12 +333,19 @@ export default function Portfolio() {
                       required
                     />
                   </div>
+
                   <Button
                     type="submit"
                     className="w-full bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700"
                   >
                     Enviar Mensagem
                   </Button>
+
+                  {formSent && (
+                    <p className="text-green-400 mt-4 text-center">
+                      ✅ Mensagem enviada com sucesso! Entrarei em contato em breve.
+                    </p>
+                  )}
                 </form>
               </CardContent>
             </Card>
