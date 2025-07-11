@@ -20,13 +20,54 @@ export default function Portfolio() {
   const [formSent, setFormSent] = useState(false)
 
   const skills = [
-    { name: "JavaScript", icon: Code, color: "text-yellow-400" },
-    { name: "React / Next.js", icon: Globe, color: "text-blue-400" },
-    { name: "HTML / CSS / Tailwind", icon: Code, color: "text-orange-400" },
-    { name: "Java / Spring Boot", icon: Server, color: "text-red-400" },
-    { name: "MySQL", icon: Database, color: "text-blue-300" },
-    { name: "Git / GitHub", icon: GitBranch, color: "text-purple-400" },
-  ]
+  {
+    category: "Linguagens",
+    items: [
+      { name: "JavaScript / TypeScript", icon: Code, color: "text-yellow-400" },
+      { name: "Java", icon: Server, color: "text-red-400" },
+      { name: "Python", icon: Code, color: "text-green-400" },
+      { name: "PHP", icon: Server, color: "text-indigo-400" },
+    ],
+  },
+  {
+    category: "Frameworks e Bibliotecas",
+    items: [
+      { name: "React", icon: Globe, color: "text-blue-400" },
+      { name: "Next.js", icon: Globe, color: "text-gray-400" },
+      { name: "Spring Boot", icon: Server, color: "text-emerald-400" },
+      { name: "Express", icon: Server, color: "text-yellow-500" },
+      { name: "pandas", icon: Cpu, color: "text-pink-400" },
+      { name: "matplotlib", icon: Cpu, color: "text-purple-400" },
+      { name: "plotly.express", icon: Cpu, color: "text-blue-400" },
+    ],
+  },
+  {
+    category: "Banco de Dados",
+    items: [
+      { name: "MySQL", icon: Database, color: "text-blue-300" },
+      { name: "PostgreSQL", icon: Database, color: "text-sky-400" },
+      { name: "MongoDB", icon: Database, color: "text-green-300" },
+    ],
+  },
+  {
+    category: "Estilo e Layout",
+    items: [
+      { name: "HTML", icon: Code, color: "text-orange-400" },
+      { name: "CSS", icon: Code, color: "text-blue-500" },
+      { name: "Tailwind", icon: Code, color: "text-cyan-400" },
+      { name: "Bootstrap", icon: Code, color: "text-yellow-400" },
+    ],
+  },
+  {
+    category: "Versionamento",
+    items: [
+      { name: "Git", icon: GitBranch, color: "text-purple-400" },
+      { name: "GitHub", icon: GitBranch, color: "text-white" },
+    ],
+  },
+];
+
+
 
   const projects = [
     {
@@ -186,17 +227,32 @@ export default function Portfolio() {
           <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
             Habilidades
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skills.map((skill, index) => (
-              <Card
-                key={skill.name}
-                className="bg-gray-800 border-gray-700 hover:border-green-400 transition-all duration-300 hover:scale-105"
-              >
-                <CardContent className="p-6 text-center">
-                  <skill.icon className={`w-12 h-12 mx-auto mb-4 ${skill.color}`} />
-                  <h3 className="text-lg font-semibold text-white">{skill.name}</h3>
-                </CardContent>
-              </Card>
+          <div className="space-y-12">
+            {skills.map((group, index) => (
+              <div key={index}>
+                <div className="text-center mb-8">
+                <h3 className="text-2xl font-semibold text-green-400 mb-2">{group.category}</h3>
+                  <div className="flex justify-center items-center gap-2">
+                    <div className="h-px w-12 bg-gradient-to-r from-green-400 to-blue-500" />
+                    <Cpu className="text-green-400 w-5 h-5 animate-pulse" />
+                    <div className="h-px w-12 bg-gradient-to-r from-blue-500 to-green-400" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {group.items.map((skill) => (
+                    <Card
+                      key={skill.name}
+                      className="bg-gray-800 border-gray-700 hover:border-green-400 transition-all duration-300 hover:scale-105"
+                    >
+                      <CardContent className="p-6 text-center">
+                        <skill.icon className={`w-12 h-12 mx-auto mb-4 ${skill.color}`} />
+                        <h4 className="text-lg font-semibold text-white">{skill.name}</h4>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -356,7 +412,7 @@ export default function Portfolio() {
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-gray-800">
         <div className="container mx-auto text-center">
-          <p className="text-gray-400">© 2024 Paulo André. Desenvolvido com ❤️ e muito ☕</p>
+          <p className="text-gray-400">© 2025 Paulo André. Desenvolvido com ❤️ e muito ☕</p>
         </div>
       </footer>
     </div>
